@@ -202,12 +202,12 @@ const Landing = () => {
           </div>
           <div className="flex justify-start items-start space-x-4">
             <Button
-              type="indigo"
+              styles="text-white w-48 rounded-full p-2 font-Poppins text-2xl bg-indigo-500 hover:bg-indigo-600"
               lable="Log In"
               action={() => setShowLogIn(true)}
             />
             <Button
-              type="secondary"
+              styles="text-white w-48 rounded-full p-2 font-Poppins text-2xl bg-secondary-500 hover:bg-secondary-600"
               lable="Register"
               action={() => setShowSignUp(true)}
             />
@@ -226,14 +226,12 @@ const Landing = () => {
         open={showSignUp}
         close={() => setShowSignUp(false)}
         title="Register"
-     
       />
       <Modal
         content={LogInContent}
         open={showLogIn}
         close={() => setShowLogIn(false)}
         title="Log In"
-       
       />
     </>
   );
