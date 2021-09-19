@@ -1,5 +1,5 @@
 import {createAsyncThunk,createSlice} from '@reduxjs/toolkit'
-import { auth, login_auth, uploadData } from '../../Utility'
+import { auth, login_auth } from '../../Utility'
 
 
 
