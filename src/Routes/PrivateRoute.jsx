@@ -6,7 +6,7 @@ const PrivateRoute = ({children,...rest}) => {
     return (
       <Route
       {...rest}
-       render={()=>data.token ? children :<Redirect to='/' />}
+       render={()=>data.token || data.user? children :<Redirect to='/' />}
       />
     )
 }

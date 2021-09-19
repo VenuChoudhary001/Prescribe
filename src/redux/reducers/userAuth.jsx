@@ -1,5 +1,5 @@
 import {createAsyncThunk,createSlice} from '@reduxjs/toolkit'
-import { auth, login_auth } from '../../Utility'
+import { auth, login_auth, uploadData } from '../../Utility'
 
 
 
@@ -19,7 +19,7 @@ export const loginUser = createAsyncThunk("LOGIN", async (val) => {
 const userSlice=createSlice({
     name:"USER",
     initialState:{
-
+    
     },
     reducers:{},
     extraReducers:{
@@ -45,7 +45,7 @@ const userSlice=createSlice({
                }
            }
            return {
-               err:action.payload 
+               err:action.payload.non_field_errors[0] 
            }
         },
         [loginUser.rejected]:(state,action)=>{
@@ -57,7 +57,8 @@ const userSlice=createSlice({
             return {
                 loading:true
             }
-        }
+        },
+       
     }
 })
 

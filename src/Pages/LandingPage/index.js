@@ -4,7 +4,7 @@ import Button from "../../Components/Constants/Button";
 import TextBox from "../../Components/Constants/TextBox";
 import Modal from "../../Components/Modal";
 import Navbar from "../../Components/Navbar";
-import { loginUser, signUpUser } from "../../redux/reducers/userSlice";
+import { loginUser, signUpUser } from "../../redux/reducers/userAuth";
 import { useForm, validate } from "../../Utility";
 import {useHistory} from 'react-router-dom'
 import BG from "./bg.png";
@@ -184,6 +184,9 @@ const Landing = () => {
   if (data.token) {
    
     history.push("/dashboard");
+  }
+  if(data.user){
+     history.push("/dashboard");
   }
   if(data.loading){
     return <Loading/>

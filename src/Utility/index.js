@@ -61,3 +61,24 @@ export const email_validatification=(val)=>{
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(val).toLowerCase());
 }
+
+
+export const uploadData=async (val)=>{
+    try {
+        let res = await axios.post(`${API}/tracker/detail/`,{...val});
+        return res;
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+
+export const UploadPrescription=async (val)=>{
+    try {
+        let res = await axios.post(`${API}/tracker/prescription/`,{...val});
+        console.log(res);
+        return res;
+    } catch (error) {
+        return error.response.data
+    }
+}
