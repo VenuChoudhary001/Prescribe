@@ -4,6 +4,7 @@ import { uploadData, UploadPrescription } from '../../Utility';
 
 export const uploadPres=createAsyncThunk("UPLOAD_PRESCRIPTION",async (val)=>{
     let res=await UploadPrescription(val)
+    console.log(res)
     return res;
 } )
 
@@ -15,7 +16,9 @@ export const addData = createAsyncThunk("ADD_DATA", async (val) => {
 });
 const userDataSlice = createSlice({
   name: "USER/DATA",
-  initialState: {},
+  initialState: {
+      pres:[]
+  },
   reducers: {},
   extraReducers: {
     [addData.fulfilled]: (state, action) => {
@@ -41,9 +44,10 @@ const userDataSlice = createSlice({
     [uploadPres.fulfilled]:(state,action)=>{
         console.log(action);
         return {
-            ...state,
-            loading:false
-        }
+          ...state,
+          loading: false,
+          pres: [...state.pres, action.payload.data.prescription_image],
+        };
     },
     [uploadPres.pending]:(state,action)=>{
         return {

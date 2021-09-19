@@ -74,9 +74,14 @@ export const uploadData=async (val)=>{
 
 
 export const UploadPrescription=async (val)=>{
+    
+    const data=new FormData();
+    data.append("prescription_image",val.file,val.file.name)
+    data.append("user",val.user)
     try {
-        let res = await axios.post(`${API}/tracker/prescription/`,{...val});
-        console.log(res);
+        let res = await axios.post(`${API}/tracker/prescription/`,data,{headers:{
+            "content-type":"multipart/form-data"
+        }});
         return res;
     } catch (error) {
         return error.response.data

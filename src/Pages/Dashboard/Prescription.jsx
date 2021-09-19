@@ -7,22 +7,21 @@ import TextBox from '../../Components/Constants/TextBox'
 import Modal from '../../Components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { uploadPres } from '../../redux/reducers/userDataSlice'
-
-// const API = "https://res.cloudinary.com/saitama";
-
-
+import Loading from '../../Components/Loading'
+const API = "https://res.cloudinary.com/saitama/";
 const Prescription = () => {
     const dispatch = useDispatch();
-    // const USER_DATA=useSelector(state=>state.USER_DATA)
+     const USER_DATA=useSelector(state=>state.USER_DATA)
     const data=useSelector(state=>state.USER)
     const [show,setShow]=useState(false);
     const [file,setFile]=useState();
-
+    
     const handleUpload=()=>{
-         
+        setShow(false);
          dispatch(uploadPres({file,user:data.user.id}))
+       
     }
-    console.log(file)
+    console.log(USER_DATA)
     const UPLOAD=(
     <>
     <div className='p-2 flex flex-col  justify-center items-center spcae-y-4' >
@@ -32,25 +31,39 @@ const Prescription = () => {
     </div>
     
     </>)
+  
     return (
-        <>
-            <DashboardNav/>
-            <section className='grid grid-cols-12 my-2 p-2'>
-                <main className="col-span-3 bg-white flex items-center shadow-2xl p-2 space-x-4">
-                     <div className="">
-                         <img src={Prescript} className='stat_img' alt="" />
-                     </div>
-                     <div className="flex flex-col  space-y-2">
-                         <Button lable="Click to view" styles="p-1 bg-green-600 hover:bg-green-800 text-white w-36 font-extralight font-Poppins rounded-full"/>
-                         <div className="font-normal">Uploaded on </div>
-                     </div>
-                </main>
-
-            </section>
-            <FloatingButton action={()=>setShow(true)}/>
-           <Modal open={show} close={()=>setShow(false)} content={UPLOAD} title="Upload"/>
-        </>
-    )
+      <>
+        <DashboardNav />
+        {USER_DATA.loading && <Loading />}
+        <section className="grid grid-cols-12 my-2 p-2">
+          {USER_DATA.pres.length > 0 &&
+            USER_DATA.pres.map((item) => (
+              <main className="col-span-3 bg-white flex items-center shadow-2xl p-2 space-x-4">
+                <div className="">
+                  <img src={Prescript} className="stat_img" alt="" />
+                </div>
+                <div className="flex flex-col  space-y-2">
+                  <a href={`${API}${item}`} rel="noreferrer" target="_blank">
+                    <Button
+                      lable="Click to view"
+                      styles="p-1 bg-green-600 hover:bg-green-800 text-white w-36 font-extralight font-Poppins rounded-full"
+                    />
+                  </a>
+                  <div className="font-normal">Uploaded on </div>
+                </div>
+              </main>
+            ))}
+        </section>
+        <FloatingButton action={() => setShow(true)} />
+        <Modal
+          open={show}
+          close={() => setShow(false)}
+          content={UPLOAD}
+          title="Upload"
+        />
+      </>
+    );
 }
 
 export default Prescription
