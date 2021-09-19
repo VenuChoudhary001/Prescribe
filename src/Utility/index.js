@@ -87,3 +87,16 @@ export const UploadPrescription=async (val)=>{
         return error.response.data
     }
 }
+
+
+export const getUserData=async (val)=>{
+    try {
+        let res=await axios.get(`${API}/tracker/detail/id`,val);
+        console.log(res)
+        return res;
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+

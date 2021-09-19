@@ -6,7 +6,7 @@ import Button from '../../Components/Constants/Button'
 import TextBox from '../../Components/Constants/TextBox'
 import Modal from '../../Components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { uploadPres } from '../../redux/reducers/userDataSlice'
+import {  uploadPres } from '../../redux/reducers/userDataSlice'
 import Loading from '../../Components/Loading'
 const API = "https://res.cloudinary.com/saitama/";
 const Prescription = () => {
@@ -16,6 +16,9 @@ const Prescription = () => {
     const [show,setShow]=useState(false);
     const [file,setFile]=useState();
     
+
+
+
     const handleUpload=()=>{
         setShow(false);
          dispatch(uploadPres({file,user:data.user.id}))
@@ -31,7 +34,7 @@ const Prescription = () => {
     </div>
     
     </>)
-  
+    
     return (
       <>
         <DashboardNav />

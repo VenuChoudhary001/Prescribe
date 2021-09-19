@@ -21,7 +21,11 @@ const userSlice=createSlice({
     initialState:{
     
     },
-    reducers:{},
+    reducers:{
+        logout:(state,action)=>{
+            return {}
+        }
+    },
     extraReducers:{
         [signUpUser.fulfilled]:(state,action)=>{
             if(action.payload.status===200){
@@ -62,5 +66,5 @@ const userSlice=createSlice({
     }
 })
 
-
+export const {logout}=userSlice.actions
 export default userSlice.reducer

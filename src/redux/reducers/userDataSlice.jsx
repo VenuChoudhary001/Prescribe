@@ -1,5 +1,5 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
-import { uploadData, UploadPrescription } from '../../Utility';
+import { getUserData, uploadData, UploadPrescription } from '../../Utility';
 
 
 export const uploadPres=createAsyncThunk("UPLOAD_PRESCRIPTION",async (val)=>{
@@ -7,6 +7,11 @@ export const uploadPres=createAsyncThunk("UPLOAD_PRESCRIPTION",async (val)=>{
     console.log(res)
     return res;
 } )
+
+export const fetchUser=createAsyncThunk("FETCH/USER",async (val)=>{
+    let res=await getUserData(val);
+    return res;
+})
 
 
 export const addData = createAsyncThunk("ADD_DATA", async (val) => {

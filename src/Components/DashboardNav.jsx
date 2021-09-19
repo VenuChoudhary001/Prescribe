@@ -1,8 +1,14 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { logout } from '../redux/reducers/userAuth';
 import Button from './Constants/Button';
 import Navbar from './Navbar';
 const DashboardNav = () => {
+  const dispatch=useDispatch();
+  const handleLogOut=()=>{
+    dispatch(logout())
+  }
     return (
       <>
         <main className="col-span-12 bg-white flex justify-between items-center">
@@ -20,8 +26,9 @@ const DashboardNav = () => {
             </NavLink>
             <div className="text-gray-900 text-xl font-Poppins">
               <Button
+              action={handleLogOut}
                 lable="Log out"
-                styles="p-1 w-28 rounded-full bg-green-700  text-white text-lg font-Poppins font-extralight"
+                styles="p-1 w-28 rounded-full bg-green-700 hover:bg-green-800 text-white text-lg font-Poppins font-extralight"
               />
             </div>
           </div>
