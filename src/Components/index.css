@@ -74,10 +74,15 @@
 }
 
 .welcome{
-   background: linear-gradient(90.97deg, #057E86 3.76%, #63CBD9 93.31%);
+   background:linear-gradient(to bottom , rgba(0 0 0 / 0.45) , rgba(0 0 0 / 0.45)),url(../Assets/BG12.jpg) no-repeat center/cover ;
 }
 .stat_img{
     width: 100%;
     max-width: 80px;
+    object-fit: contain;
+}
+.logo{
+    width: 100%;
+    max-width: 30px;
     object-fit: contain;
 }

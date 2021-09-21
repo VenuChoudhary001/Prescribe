@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Card from '../../Components/Card';
 
 import Button from '../../Components/Constants/Button';
@@ -15,12 +15,15 @@ import Modal from '../../Components/Modal';
 import TextBox from '../../Components/Constants/TextBox';
 import DropDown from '../../Components/Constants/DropDown';
 import { addData } from '../../redux/reducers/userDataSlice';
-import { useForm } from '../../Utility';
+import { getQuote, useForm } from '../../Utility';
 import DashboardNav from '../../Components/DashboardNav';
+import MobileNav from '../../Components/MobileNav';
 
 const Dashboard = () => {
   const [hours, setHours] = useState();
   const [mins, setMins] = useState();
+  const [quote,setQuote]=useState('');
+  const [openNav,setOpenNav]=useState(false);
   const data=useSelector(state=>state.USER);
   const USER_DATA=useSelector(state=>state.USER_DATA)
   const dispatch=useDispatch();
@@ -34,7 +37,7 @@ const Dashboard = () => {
   const diabp = useForm("");
   const creatinine=useForm("")
   const [sex,setSex]=useState("MALE")
-  console.log(sex)
+  const quoteRef=useRef();
   const handleSubmit=()=>{
     dispatch(addData({
       user:data.user.id,
@@ -87,13 +90,14 @@ const Dashboard = () => {
     </>
   );
 
+ 
   let BLOOD_PRESSURE=USER_DATA.diabp && STAT_CONTENT({title:"Blood Pressure",img_url:BP,content:USER_DATA.bptext,data:`${USER_DATA.diabp}/${USER_DATA.sysbp}`})
   let BLOOD_SUGAR=USER_DATA.bloodsugar && STAT_CONTENT({title:"Blood Sugar",img_url:BS,content:USER_DATA.bloodsugartext,data:USER_DATA.bloodsugar})
   let CHOLESTROL=USER_DATA.cholesterol && STAT_CONTENT({title:"Cholestrol",img_url:HEART,content:USER_DATA.cholesteroltext,data:USER_DATA.cholesterol})
   let BMI_DATA=USER_DATA.bmi && STAT_CONTENT({title:"BMI",img_url:BMI,content:USER_DATA.bmitext,data:USER_DATA.bmi});
   let CREATININE=USER_DATA.creatinine && STAT_CONTENT({title:"Creatinine",img_url:KIDNEY,content:USER_DATA.creatininetext,data:USER_DATA.creatinine})
   const WELCOME_CONTENT=(<>
-    <div className="text-4xl w-full overflow-hidden text-white p-4 font-Poppins font-normal">Welcome </div>
+    <div className="text-4xl w-full overflow-hidden text-white p-4 font-Poppins font-bold">Welcome {data.user.username}</div>
   </>)
   useEffect(()=>{
     setInterval(()=>{
@@ -101,25 +105,52 @@ const Dashboard = () => {
      setMins(new Date().getMinutes())
     },1000)
   },[])
+  const GET_QUOTE= async ()=>{
+    let res=await getQuote();
+    console.log(res)
+     setQuote(res.contents.quotes[0].quote);
+  }
+  quoteRef.current=GET_QUOTE;
+  useEffect(()=>{
+     quoteRef.current()
+  },[])
+
+  const QUOTES = (
+    <>
+      <div className="flex flex-col space-y-2">
+        <div className="text-xl font-extralight text-white italic">
+          Quote of the Day
+        </div>
+        <hr className="text-white opacity-50" />
+        <div className="italic font-normal text-xl text-white">
+         "{quote}"
+        </div>
+      </div>
+    </>
+  );
+
+
   const BANNER_CONTENT = (
     <>
-      <article className="p-3 flex justify-between text-white">
-        <div className="flex flex-col max-w-max space-y-1">
-          <div className="font-extralight font-Poppins text-6xl">
-            {hours}:{mins}
+      <article className="p-3 flex flex-col md:flex-row md:justify-between text-white">
+        <div className="flex flex-col w-full md:max-w-max space-y-1">
+          <div className="font-extralight font-Poppins text-3xl md:text-6xl">
+            {hours > 9 ? hours : `0${hours}`}:{mins > 9 ? mins : `0${mins}`}
           </div>
-          <div className="text-3xl font-extralight">
-            {new Date().getDate()}{" "}
-            {new Date().toLocaleDateString("en-US", { month: "long" })} ,{" "}
+          <div className="text-xl flex md:text-3xl font-extralight">
+            {new Date().getDate()}{" "} {new Date().toLocaleDateString("en-US", { month: "long" })} ,{" "}
             {new Date().getFullYear()}
           </div>
-          <div className="text-3xl font-extralight">
+          <div className="text-xl md:text-3xl font-extralight">
             {new Date().toLocaleDateString("en-US", { weekday: "long" })}
           </div>
         </div>
-        <div className="flex text-right flex-col">
+          {/* <hr className="md:hidden text-white opacity-30"/> */}
+        <div className="flex md:text-right flex-col">
           <div className="text-lg font-light">Last Updated on</div>
-          <div className="text-4xl font-normal">{data.created && data.created}</div>
+          <div className="text-4xl font-normal">
+            {data.created && data.created}
+          </div>
         </div>
       </article>
     </>
@@ -130,17 +161,23 @@ const Dashboard = () => {
     return (
       <>
         <section className="grid grid-cols-12 space-y-4  ">
-          <DashboardNav />
-          <main className="col-span-2">
+          <DashboardNav open={openNav} close={setOpenNav} />
+          <main className="col-span-12 md:col-span-2">
             <Card
-              styles=" p-2 h-full welcome text-white rounded-sm shadow-2xl m-2"
+              styles=" p-2 h-full welcome text-white rounded-md shadow-2xl m-2"
               content={WELCOME_CONTENT}
             />
           </main>
-          <main className="col-span-10 mr-4">
+          <main className="col-span-12 hidden md:block md:col-span-6 mr-4">
             <Card
-              styles=" w-full shadow-2xl h-full bg-green-700 p-2 m-2 rounded-sm"
+              styles=" w-full shadow-2xl h-full banner p-2 m-2 rounded-md "
               content={BANNER_CONTENT}
+            />
+          </main>
+          <main className="col-span-12 md:col-span-4 mr-4">
+            <Card
+              styles=" w-full shadow-2xl h-full quote p-2 m-2 rounded-md "
+              content={QUOTES}
             />
           </main>
           {USER_DATA.loading && (
@@ -149,14 +186,12 @@ const Dashboard = () => {
             </main>
           )}
           {!USER_DATA.loading && USER_DATA.height && (
-
-            <> 
-          
-              <main className="col-span-3">{BLOOD_PRESSURE}</main>
-              <main className="col-span-3">{BLOOD_SUGAR}</main>
-              <main className="col-span-3">{BMI_DATA}</main>
-              <main className="col-span-3">{CHOLESTROL}</main>
-              <main className="col-span-3">{CREATININE}</main>
+            <>
+              <main className="col-span-12 md:col-span-3">{BLOOD_PRESSURE}</main>
+              <main className="col-span-12 md:col-span-3">{BLOOD_SUGAR}</main>
+              <main className="col-span-12 md:col-span-3">{BMI_DATA}</main>
+              <main className="col-span-12 md:col-span-3">{CHOLESTROL}</main>
+              <main className="col-span-12 md:col-span-3">{CREATININE}</main>
             </>
           )}
 
@@ -168,6 +203,7 @@ const Dashboard = () => {
           content={ADD_FORM}
           title="Uplaod Medical Data"
         />
+        <MobileNav open={openNav} close={setOpenNav} />
       </>
     );
 }
@@ -175,11 +211,11 @@ const Dashboard = () => {
 
 export  const STAT_CONTENT = ({ img_url, content, data, title }) => (
   <>
-    <div className="flex justify-center items-center text-center m-2 h-full shadow-2xl items-center flex-col p-2 space-y-2">
+    <div className="flex justify-center bg-white rounded-md items-center text-center m-2 h-full shadow-lg md:shadow-2xl items-center flex-col p-2 space-y-2">
       <div className="">
         <img src={img_url} className="stat_img" alt="" />
       </div>
-      <div className="text-xl text-gray-900 ">{title}</div>
+      <div className="text-xl font-bold text-gray-900 ">{title}</div>
       <div className="text-2xl text-gray-800 font-bold">{data}</div>
       <div className={`text-md ${content.includes('high') || content.includes('low')?'text-red-600':'text-green-500'}  font-bold`}>{content}</div>
     </div>

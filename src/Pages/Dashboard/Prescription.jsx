@@ -8,7 +8,7 @@ import Modal from '../../Components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import {  fetchUser, uploadPres } from '../../redux/reducers/userDataSlice'
 import Loading from '../../Components/Loading'
-
+import MobileNav from '../../Components/MobileNav'
 const API = "https://res.cloudinary.com/saitama/";
 const Prescription = () => {
     const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Prescription = () => {
     const data=useSelector(state=>state.USER)
     const [show,setShow]=useState(false);
     const [file,setFile]=useState();
-    
+     const [openNav, setOpenNav] = useState(false);
 
     const fetchRef=useRef();
     
@@ -51,23 +51,32 @@ const Prescription = () => {
     
     return (
       <>
-        <DashboardNav />
+        <DashboardNav open={openNav} close={setOpenNav} />
         {USER_DATA.loading && <Loading />}
-        <section className="grid grid-cols-12 my-2 space-x-4 space-y-4 p-2">
+        <section className="grid grid-cols-12 my-2 mx-2 md:mx-0 space-x-4 space-y-4 p-1">
           {USER_DATA.pres.length > 0 &&
             USER_DATA.pres.map((item) => (
-              <main className="col-span-3 bg-white flex items-center shadow-2xl p-2 space-x-4">
+              <main className="col-span-12 md:col-span-3 h-full bg-white flex items-center shadow-2xl space-y-2 p-2  space-x-4">
                 <div className="">
                   <img src={Prescript} className="stat_img" alt="" />
                 </div>
                 <div className="flex flex-col  space-y-2">
-                  <a href={`${API}${item.prescription_image}`} rel="noreferrer" target="_blank">
+                  <a
+                    href={`${API}${item.prescription_image}`}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <Button
                       lable="Click to view"
                       styles="p-1 bg-green-600 hover:bg-green-800 text-white w-36 font-extralight font-Poppins rounded-full"
                     />
                   </a>
-                  <div className="font-normal">Uploaded on </div>
+                  <div className="font-normal">
+                    Uploaded on :
+                    <pre className="font-bold text-md">
+                      {item.date_of_upload}
+                    </pre>{" "}
+                  </div>
                 </div>
               </main>
             ))}
@@ -79,6 +88,7 @@ const Prescription = () => {
           content={UPLOAD}
           title="Upload"
         />
+        <MobileNav open={openNav} close={setOpenNav} />
       </>
     );
 }

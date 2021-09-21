@@ -4,8 +4,8 @@
 @import url(./Pages/Dashboard/index.css);
 @import url(./Components/index.css);
 body{
-  background-color: #F2F2F2;
-  /* overflow: hidden; */
+  background-color: #F6F6F6;
+ 
   box-sizing: border-box;
   list-style: none;
 }

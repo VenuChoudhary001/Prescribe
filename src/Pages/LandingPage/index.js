@@ -9,6 +9,7 @@ import { useForm, validate } from "../../Utility";
 import {useHistory} from 'react-router-dom'
 import BG from "./bg.png";
 import Loading from "../../Components/Loading";
+import Fade from "react-reveal/Fade";
 const Landing = () => {
   const history=useHistory();
   const data=useSelector(state=>state.USER);
@@ -175,7 +176,7 @@ const Landing = () => {
 
         <Button
           lable="Login"
-          styles="border-2 p-1 text-xl font-Poppins hover:bg-gray-900 hover:text-white rounded-sm w-36 text-gray-900 border-gray-500"
+          styles="border-2 p-1 text-xl font-Poppins hover:bg-gray-900 hover:text-white rounded-full md:rounded-sm focus:bg-gray-900 focus:text-white w-36 text-gray-900 border-gray-500"
           action={handleLogIn}
         />
       </article>
@@ -194,26 +195,42 @@ const Landing = () => {
   return (
     <>
       <Navbar />
-      <section className="my-4 grid grid-cols-12 gap-3">
-        <div className="col"></div>
-        <main className="col-span-5 flex flex-col space-y-8 justify-center ">
-          <div className="title text-3xl font-DmMono italic text-gray-700">
-            Having issues tracking your health??
-          </div>
+      <section className="my-4 grid grid-cols-12 gap-3 ">
+        <div className="md:col-span-1 hidden md:block"></div>
+        <main className="md:hidden col-span-12">
+          <img
+            src={BG}
+            className="max-w-screen-sm object-contain w-full"
+            alt=""
+          />
+        </main>
+        <main className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start space-y-8 justify-center ">
+          <Fade left>
+            <div className="text-center md:text-left text-xl md:text-3xl font-DmMono italic text-gray-700">
+              Having issues tracking your health??
+            </div>
+          </Fade>
+
           <div className="flex justify-start items-start space-x-4">
+          <Fade left>
+
             <Button
-              styles="text-white w-48 rounded-full p-2 font-Poppins text-2xl bg-indigo-500 hover:bg-indigo-600"
+              styles="text-white w-36 md:w-48 rounded-full p-2 font-Poppins text-md md:text-2xl bg-indigo-500 hover:bg-indigo-600"
               lable="Log In"
               action={() => setShowLogIn(true)}
             />
+            </Fade>
+          <Fade left>
+            
             <Button
-              styles="text-white w-48 rounded-full p-2 font-Poppins text-2xl bg-secondary-500 hover:bg-secondary-600"
+              styles="text-white  w-36 md:w-48 rounded-full p-2 font-Poppins text-md md:text-2xl bg-secondary-500 hover:bg-secondary-600"
               lable="Register"
               action={() => setShowSignUp(true)}
             />
+            </Fade>
           </div>
         </main>
-        <main className="col-span-6">
+        <main className="hidden md:block md:col-span-5">
           <img
             src={BG}
             className="max-w-screen-sm object-contain w-full"

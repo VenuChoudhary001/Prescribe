@@ -100,3 +100,14 @@ export const getUserData=async (val)=>{
 }
 
 
+export const getQuote=async ()=>{
+    try {
+         let res = await axios.get(
+           "http://quotes.rest/qod.json?category=inspire"
+         );
+         return res.data;
+    } catch (error) {
+        console.log(error)
+    }
+   
+}
