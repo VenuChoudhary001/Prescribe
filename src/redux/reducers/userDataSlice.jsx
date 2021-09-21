@@ -10,6 +10,7 @@ export const uploadPres=createAsyncThunk("UPLOAD_PRESCRIPTION",async (val)=>{
 
 export const fetchUser=createAsyncThunk("FETCH/USER",async (val)=>{
     let res=await getUserData(val);
+    console.log(res)
     return res;
 })
 
@@ -22,7 +23,8 @@ export const addData = createAsyncThunk("ADD_DATA", async (val) => {
 const userDataSlice = createSlice({
   name: "USER/DATA",
   initialState: {
-      pres:[]
+      pres:[],
+      count:""
   },
   reducers: {},
   extraReducers: {
@@ -51,7 +53,7 @@ const userDataSlice = createSlice({
         return {
           ...state,
           loading: false,
-          pres: [...state.pres, action.payload.data.prescription_image],
+          pres: [...state.pres, {...action.payload.data}],
         };
     },
     [uploadPres.pending]:(state,action)=>{
@@ -64,6 +66,14 @@ const userDataSlice = createSlice({
         console.log(action)
         return {
             ...state
+        }
+    },
+    [fetchUser.fulfilled]:(state,action)=>{
+        return {
+            ...state,
+            pres:[
+                ...state.pres,...action.payload.data
+            ]
         }
     }
   },

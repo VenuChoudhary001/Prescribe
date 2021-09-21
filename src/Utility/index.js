@@ -91,7 +91,7 @@ export const UploadPrescription=async (val)=>{
 
 export const getUserData=async (val)=>{
     try {
-        let res=await axios.get(`${API}/tracker/detail/id`,val);
+        let res = await axios.get(`${API}/tracker/prescription/${val}/`);
         console.log(res)
         return res;
     } catch (error) {
