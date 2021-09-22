@@ -10,7 +10,7 @@ const Modal = ({title,content,open,close,showLoading}) => {
       <>
         <Fade top>
           <div className="absolute  max-w-screen-sm p-2 top-24 md:left-1/4 md:right-1/4 left-1 right-1 w-full  z-50">
-            <div className=" p-4   max-h-screen overflow-scroll  flex rounded-md shadow-2xl flex-col space-y-4 bg-white">
+            <div className=" p-4   max-h-screen   flex rounded-md shadow-2xl flex-col space-y-4 bg-white">
               <div className="text-2xl   w-full flex justify-between ">
                 <div className="font-semibold  text-gray-800">{title}</div>
                 <div className="">
