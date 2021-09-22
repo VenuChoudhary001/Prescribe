@@ -47,7 +47,9 @@ const Prescription = () => {
         
      },[])
   
-      
+      if(USER_DATA.loading){
+        return <Loading/>
+      }
     
     return (
       <>

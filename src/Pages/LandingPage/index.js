@@ -138,11 +138,14 @@ const Landing = () => {
           <div className="">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 fill-current text-gray-800"
+              className="h-8 w-8 fill-current text-gray-800"
               viewBox="0 0 20 20"
             >
-              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              <path
+                fillRule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                clipRule="evenodd"
+              />
             </svg>
           </div>
           <TextBox
@@ -204,7 +207,7 @@ const Landing = () => {
             alt=""
           />
         </main>
-        <main className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start space-y-8 justify-center ">
+        <main className=" col-span-12 md:col-span-5 flex flex-col items-center md:items-start space-y-8 justify-center ">
           <Fade left>
             <div className="text-center md:text-left text-xl md:text-3xl font-DmMono italic text-gray-700">
               Having issues tracking your health??

@@ -72,9 +72,22 @@ const userDataSlice = createSlice({
         return {
             ...state,
             pres:[
-                ...state.pres,...action.payload.data
-            ]
+                ...action.payload.data
+            ],
+            loading:false
         }
+    },
+    [fetchUser.pending]:(state,action)=>{
+      return {
+        ...state,
+          loading:true,
+      }
+    },
+    [fetchUser.rejected]:(state,action)=>{
+      return {
+        ...state,
+        loading:false
+      }
     }
   },
 });

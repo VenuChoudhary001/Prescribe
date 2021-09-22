@@ -18,7 +18,7 @@ import { addData } from '../../redux/reducers/userDataSlice';
 import { getQuote, useForm } from '../../Utility';
 import DashboardNav from '../../Components/DashboardNav';
 import MobileNav from '../../Components/MobileNav';
-import ComponentLoading from '../../Components/ComponentLoading';
+
 
 const Dashboard = () => {
   const [hours, setHours] = useState();
@@ -127,10 +127,10 @@ const GET_QUOTE = async () => {
           Quote of the Day
         </div>
         <hr className="text-white opacity-50" />
-   { quote?<div className="italic font-normal text-xl text-white">
+   { quote && <div className="italic font-normal text-xl text-white">
         "{quote.quote}"<br/>
         - { quote.author}
-        </div>:<ComponentLoading/>}
+        </div>}
       </div>
     </>
   );
