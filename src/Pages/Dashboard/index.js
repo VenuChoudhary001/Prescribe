@@ -99,21 +99,25 @@ const Dashboard = () => {
   const WELCOME_CONTENT=(<>
     <div className="text-4xl w-full overflow-hidden text-white p-4 font-Poppins font-bold">Welcome {data.user.username}</div>
   </>)
+
+const GET_QUOTE = async () => {
+  let res = await getQuote();
+  console.log(res);
+  setQuote(res.contents.quotes[0].quote);
+};
+   quoteRef.current = GET_QUOTE;
   useEffect(()=>{
+    
     setInterval(()=>{
      setHours(new Date().getHours());
      setMins(new Date().getMinutes())
     },1000)
   },[])
-  const GET_QUOTE= async ()=>{
-    let res=await getQuote();
-    console.log(res)
-     setQuote(res.contents.quotes[0].quote);
-  }
-  quoteRef.current=GET_QUOTE;
+ 
   useEffect(()=>{
-     quoteRef.current()
-  },[])
+    quoteRef.current()
+  },[quoteRef])
+    
 
   const QUOTES = (
     <>
@@ -123,7 +127,7 @@ const Dashboard = () => {
         </div>
         <hr className="text-white opacity-50" />
         <div className="italic font-normal text-xl text-white">
-         "{quote}"
+        "{quote && quote}"
         </div>
       </div>
     </>
@@ -155,9 +159,9 @@ const Dashboard = () => {
       </article>
     </>
   );
-     if(!hours ){
-       return <Loading/>
-     }
+      if(!hours){
+        return <Loading/>
+      }
     return (
       <>
         <section className="grid grid-cols-12 space-y-4  ">
